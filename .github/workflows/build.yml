@@ -20,7 +20,7 @@ jobs:
     - name: Create artifacts
       run: |
         git clone --depth=1 --branch=master https://github.com/Anuken/Arc
-        git clone --depth=1 --branch='me-things' https://github.com/Blockzilla/Mindustry
+        git clone --depth=1 --branch=me-things https://github.com/Blockzilla101/Mindustry
         cd Mindustry
         MindustryBE=$(curl --silent "https://api.github.com/repos/Anuken/MindustryBuilds/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
         ./gradlew desktop:dist server:dist -PantigriefVersion=${RELEASE_VERSION} -Pbuildversion=${MindustryBE} -PversionType=bleeding-edge --stacktrace
