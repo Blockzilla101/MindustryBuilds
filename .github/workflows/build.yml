@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 14
-    - name: Clone Mindustry & Arc
+    - name: Clone Mindustry
       run: |
         git clone --depth=1 --branch=me-things https://github.com/Blockzilla101/Mindustry
     - name: Set env
