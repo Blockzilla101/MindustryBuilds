@@ -18,7 +18,6 @@ jobs:
         java-version: 14
     - name: Clone Mindustry & Arc
       run: |
-        git clone --depth=1 --branch=master https://github.com/Anuken/Arc
         git clone --depth=1 --branch=me-things https://github.com/Blockzilla101/Mindustry
     - name: Set env
       run: |
