@@ -35,35 +35,19 @@ jobs:
       run: |
         cd ./Mindustry
         MindustryBE=$(curl --silent "https://api.github.com/repos/Anuken/MindustryBuilds/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
-        echo "MindustryRelease=$(curl --silent "https://api.github.com/repos/Anuken/Mindustry/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")')" >> $GITHUB_ENV
         ./gradlew desktop:dist server:dist -PantigriefVersion=${RELEASE_VERSION} -Pbuildversion=${MindustryBE} -PversionType=bleeding-edge --stacktrace
         mv desktop/build/libs/Mindustry.jar desktop/build/libs/Mindustry-Antigrief-BE-Desktop-${RELEASE_VERSION}.jar
         mv server/build/libs/server-release.jar server/build/libs/Mindustry-Antigrief-BE-Server-${RELEASE_VERSION}.jar
-        ./gradlew desktop:dist server:dist -Pbuildversion=${{ env.MindustryRelease }} -PversionType=release --stacktrace
-        mv desktop/build/libs/Mindustry.jar desktop/build/libs/Mindustry-Antigrief-Relase-Desktop-${{ env.MindustryRelease }}.jar
-        mv server/build/libs/server-release.jar server/build/libs/Mindustry-Antigrief-Release-Server-${{ env.MindustryRelease }}.jar
         cd ../
-    - name: Upload be desktop artifacts
+    - name: Upload BE desktop artifacts
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: Mindustry/desktop/build/libs/Mindustry-Antigrief-BE-Desktop-${{ env.RELEASE_VERSION }}.jar
         tag: ${{ github.ref }}
-    - name: Upload be server artifacts
+    - name: Upload BE server artifacts
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: Mindustry/server/build/libs/Mindustry-Antigrief-BE-Server-${{ env.RELEASE_VERSION }}.jar
-        tag: ${{ github.ref }}
-    - name: Upload desctop release artifacts
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: Mindustry/desktop/build/libs/Mindustry-Antigrief-Release-Desktop-${{ env.MindustryRelease }}.jar
-        tag: ${{ github.ref }}
-    - name: Upload server release artifacts
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: Mindustry/server/build/libs/Mindustry-Antigrief-Release-Server-${{ env.MindustryRelease }}.jar
         tag: ${{ github.ref }}
