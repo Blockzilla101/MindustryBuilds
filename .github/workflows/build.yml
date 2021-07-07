@@ -22,15 +22,6 @@ jobs:
     - name: Set env
       run: |
         echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-        hashes=$(find ./Mindustry/core/assets-raw/sprites -type f | xargs sha256sum | sha256sum)
-        echo "spriteHashes=${hashes:0:(-3)}" >> $GITHUB_ENV
-    - name: Cache Generated Sprites
-      uses: actions/cache@v2
-      with:
-        path: |
-          ./Mindustry/core/assets/sprites
-          ./Mindustry/core/assets-raw/sprites_out
-        key: sprites-${{ env.spriteHashes }}
     - name: Create artifacts
       run: |
         cd ./Mindustry
